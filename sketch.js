@@ -185,3 +185,5 @@ function drawCheckoutScreen() {
       currentScreen = 'home'; // Optionally reset to home or to a confirmation screen
     }
   }
+
+  // testing
