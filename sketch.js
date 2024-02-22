@@ -1,8 +1,8 @@
 let currentScreen = 'home'; // Possible values: 'home', 'selectProduct', 'checkout'
 let products = [
   { name: "Water", price: 1.00, img: "celsius.jpg", nutrition: "Calories: 0\nFat: 0g\nSugar: 0g" },
-  { name: "Soda", price: 1.50, img: "/Users/victoria/Downloads/code/454_challenge5/cheetofries.jpg", nutrition: "Calories: 140\nFat: 0g\nSugar: 39g" },
-  { name: "Juice", price: 2.00, img: "https://via.placeholder.com/100", nutrition: "Calories: 110\nFat: 0g\nSugar: 20g" }
+  { name: "Soda", price: 1.50, img: "cheetofries.jpg", nutrition: "Calories: 140\nFat: 0g\nSugar: 39g" },
+  { name: "Juice", price: 2.00, img: "oreos.jpg", nutrition: "Calories: 110\nFat: 0g\nSugar: 20g" }
 ];
 let selectedProduct = {};
 let selectedQuantity = 1;
@@ -17,7 +17,7 @@ function setup() {
 }
 
 function draw() {
-  background(100, 149, 237); // Use a pleasant background color
+  background(255, 182, 193); // Use a pleasant background color
   
   if (currentScreen === 'home') {
     drawHomeScreen();
@@ -34,7 +34,7 @@ function drawHomeScreen() {
   text("Digital Vending Machine", width / 2, height / 3);
   
   // Start button
-  fill(0, 255, 0); // Green button
+  fill(230,230,250); // Green button
   rect(width / 2, height / 2, 200, 50, 20);
   fill(0); // Black text
   textSize(24);
@@ -43,7 +43,7 @@ function drawHomeScreen() {
 
 function drawProductSelectionScreen() {
   clear(); // Clear the canvas before drawing the new screen
-  background(100, 149, 237); // Reapply background
+  background(255, 182, 193); // Reapply background
   
   fill(255); // White text
   textSize(24);
@@ -51,7 +51,7 @@ function drawProductSelectionScreen() {
   
   products.forEach((product, index) => {
     let startY = 100 + index * 50; // Adjusted for clarity
-    fill(0, 255, 0); // Green button
+    fill(230,230,250); // Green button
     rect(width / 2, startY, 200, 40, 20);
     fill(0); // Black text for product name
     text(product.name, width / 2, startY);
@@ -76,7 +76,7 @@ function drawProductDetails() {
   
   // Quantity selection
   text(`Quantity: ${selectedQuantity}`, width / 2, 470);
-  fill(124, 252, 0); // Light green buttons
+  fill(230,230,250); // Light green buttons
   rect(width / 2 - 60, 470, 20, 20); // Minus button
   rect(width / 2 + 60, 470, 20, 20); // Plus button
   fill(0); // Text color for buttons
@@ -168,7 +168,7 @@ function drawCheckoutScreen() {
     text(`Quantity: ${selectedQuantity}`, width / 2, 200);
     
     // Calculate Total button is drawn here but checked in mousePressed
-    fill(255, 165, 0); // Orange button
+    fill(230,230,250); // Orange button
     rect(width / 2, 300, 200, 50, 20);
     fill(0); // Black text
     text("Calculate Total", width / 2, 300);
