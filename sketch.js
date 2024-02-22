@@ -1,16 +1,27 @@
 let currentScreen = 'home'; // Possible values: 'home', 'selectProduct', 'checkout'
 let products = [
-  { name: "Water", price: 1.00, img: "celsius.jpg", nutrition: "Calories: 0\nFat: 0g\nSugar: 0g" },
-  { name: "Soda", price: 1.50, img: "cheetofries.jpg", nutrition: "Calories: 140\nFat: 0g\nSugar: 39g" },
-  { name: "Juice", price: 2.00, img: "oreos.jpg", nutrition: "Calories: 110\nFat: 0g\nSugar: 20g" }
+  { name: "Water", price: 1.00, img: "water.png", nutrition: "Calories: 0\nFat: 0g\nSugar: 0g" },
+  { name: "Coke", price: 1.50, img: "coke.png", nutrition: "Calories: 140\nFat: 0g\nSugar: 39g" },
+  { name: "Diet Coke", price: 1.50, img: "dietcoke.png", nutrition: "Calories: 140\nFat: 0g\nSugar: 39g" },
+  { name: "Oreos", price: 2.00, img: "oreos.jpg", nutrition: "Calories: 110\nFat: 0g\nSugar: 20g" },
+  { name: "Doritos", price: 5.00, img: "doritos.png", nutrition: "Calories: 147\nFat: 5g\nSugar: 40g" },
+  { name: "Reese's Cups", price: 5.00, img: "reese.png", nutrition: "Calories: 231.8\nFat: 13g\nSugar: 21.2g" },
+  { name: "Kind Bar", price: 5.00, img: "kind.png", nutrition: "Calories: 231.8\nFat: 13g\nSugar: 21.2g" },
+  { name: "Cheetos", price: 5.00, img: "cheetos.png", nutrition: "Calories: 231.8\nFat: 13g\nSugar: 21.2g" },
+  { name: "Stabucks Brew", price: 5.00, img: "coldbrew.png", nutrition: "Calories: 231.8\nFat: 13g\nSugar: 21.2g" },
+  { name: "Beef Jerky", price: 5.00, img: "beef.png", nutrition: "Calories: 231.8\nFat: 13g\nSugar: 21.2g" },
+  { name: "Celsius", price: 5.00, img: "celsius.jpg", nutrition: "Calories: 231.8\nFat: 13g\nSugar: 21.2g" },
+
 ];
 let selectedProduct = {};
 let selectedQuantity = 1;
 let productImage;
 let nutritionText = "";
+let productY; 
+let isAnimating = false; 
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(600, 1200);
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   productImage = loadImage("oreos.jpg"); // Placeholder for actual product images
@@ -59,30 +70,30 @@ function drawProductSelectionScreen() {
 
   if (selectedProduct.name) {
     drawProductDetails();
-    text("Go to Checkout", width / 2, 550);
+    text("Go to Checkout", width / 2, 900);
   }
 }
 
 function drawProductDetails() {
   // Assume productImage is a placeholder for actual image loading
   fill(255); // Background for product details
-  rect(width / 2, 400, 250, 180); // Background rect for details
+  rect(width / 2, height / 2 + 150, 250, 180); // Background rect for details
   
-  image(productImage, width / 2 - 100, 350, 100, 100); // Display product image
+  image(productImage, width / 2 - 100, height / 2 + 100, 100, 100); // Display product image
   
   fill(0); // Text color
   textSize(16);
-  text(`Nutrition:\n${nutritionText}`, width / 2 + 50, 350); // Display nutritional info
+  text(`Nutrition:\n${nutritionText}`, width / 2 + 50, height / 2 + 100); // Display nutritional info
   
   // Quantity selection
-  text(`Quantity: ${selectedQuantity}`, width / 2, 470);
+  text(`Quantity: ${selectedQuantity}`, width / 2, 820);
   fill(230,230,250); // Light green buttons
-  rect(width / 2 - 60, 470, 20, 20); // Minus button
-  rect(width / 2 + 60, 470, 20, 20); // Plus button
+  rect(width / 2 - 60, 820, 20, 20); // Minus button
+  rect(width / 2 + 60, 820, 20, 20); // Plus button
   fill(0); // Text color for buttons
   textSize(20);
-  text("-", width / 2 - 60, 470);
-  text("+", width / 2 + 60, 470);
+  text("-", width / 2 - 60, 820);
+  text("+", width / 2 + 60, 820);
 
 }
 
@@ -117,7 +128,7 @@ function mousePressed() {
     let btnWidth = 150;
     let btnHeight2 = 40;
     let btnX = width / 2 - btnWidth / 2;
-    let btnY = 550 - btnHeight / 2;
+    let btnY = 900 - btnHeight / 2;
 
     if (mouseX > btnX && mouseX < btnX + btnWidth && mouseY > btnY && mouseY < btnY + btnHeight2) {
       currentScreen = 'checkout';
@@ -125,10 +136,10 @@ function mousePressed() {
     }
 
     // Check for Quantity +/- Buttons
-    if (dist(mouseX, mouseY, width / 2 - 60, 470) < 10 && selectedQuantity > 1) {
+    if (dist(mouseX, mouseY, width / 2 - 60, 820) < 10 && selectedQuantity > 1) {
       selectedQuantity--; // Decrease quantity
       redraw();
-    } else if (dist(mouseX, mouseY, width / 2 + 60, 470) < 10) {
+    } else if (dist(mouseX, mouseY, width / 2 + 60, 820) < 10) {
       selectedQuantity++; // Increase quantity
       redraw();
     }
@@ -159,20 +170,25 @@ function mousePressed() {
 
 
 function drawCheckoutScreen() {
-    fill(255); // White text
-    textSize(24);
-    text("Checkout", width / 2, 50);
-    
-    text(`Product: ${selectedProduct.name}`, width / 2, 120);
-    text(`Price: $${selectedProduct.price}`, width / 2, 160);
-    text(`Quantity: ${selectedQuantity}`, width / 2, 200);
-    
-    // Calculate Total button is drawn here but checked in mousePressed
-    fill(230,230,250); // Orange button
-    rect(width / 2, 300, 200, 50, 20);
-    fill(0); // Black text
-    text("Calculate Total", width / 2, 300);
-  }
+  fill(255); // White text
+  textSize(24);
+  text("Checkout", width / 2, 50);
+  
+  text(`Product: ${selectedProduct.name}`, width / 2, 120);
+  text(`Price: $${selectedProduct.price}`, width / 2, 160);
+  text(`Quantity: ${selectedQuantity}`, width / 2, 200);
+  
+  // Calculate Total Price
+  let totalPrice = selectedProduct.price * selectedQuantity;
+  text(`Total: $${totalPrice.toFixed(2)}`, width / 2, 240); // Display Total Price
+  
+  // Check out button is drawn here but checked in mousePressed
+  fill(230,230,250); // Light gray button
+  rect(width / 2, 300, 200, 50, 20);
+  fill(0); // Black text
+  text("Check out", width / 2, 300);
+}
+
   
   function checkCheckoutScreenClick() {
     let btnWidth = 200;
@@ -185,5 +201,3 @@ function drawCheckoutScreen() {
       currentScreen = 'home'; // Optionally reset to home or to a confirmation screen
     }
   }
-
-  // testing
